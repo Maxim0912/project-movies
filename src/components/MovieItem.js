@@ -1,5 +1,7 @@
 import React from "react";
 
+import { Link } from "react-router-dom";
+
 export default function MovieItem({ item }) {
     return (
         <div className="card" style={{ width: "100%" }}>
@@ -11,7 +13,9 @@ export default function MovieItem({ item }) {
                 alt=""
             />
             <div className="card-body">
-                <h6 className="card-title">{item.title}</h6>
+                <Link className="card-title" to={`/movie/${item.id}`}>
+                    {item.title}
+                </Link>
                 <div className="card-text">Рейтинг: {item.vote_average}</div>
             </div>
         </div>
