@@ -1,38 +1,47 @@
-import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-import Filters from "./Filters";
-import Header from "./Header";
 import MovieList from "./MoviesList";
 import Paginate from "./Paginate";
-import SearchBar from "./SearchBar";
+import SearchWrapper from "./SearchWrapper";
 
 import { useGetAllMoviesQuery } from "../store/moviesApi";
+import { setPage } from "../store/pageSlice";
 
 export default function Main() {
-    const [activePage, setActivePage] = useState(0);
-    const { data, isLoading, isError } = useGetAllMoviesQuery(activePage + 1);
+    const dispatch = useDispatch();
+    const page = useSelector((state) => state.page.page);
+    const suggestData = useSelector((state) => state.search.suggest);
+    const { data, isLoading, isError } = useGetAllMoviesQuery(page + 1);
+    const sliceToShow = 5;
 
     if (isLoading) return <h1>Loading...</h1>;
     if (isError) return <h1>Something went wrong 🤔</h1>;
 
-    const onChange = (e) => setActivePage(e.selected);
+    const dataToShow = suggestData
+        ? suggestData.results.slice(0, sliceToShow)
+        : data.results;
+
+    const onChange = (e) => dispatch(setPage(e.selected));
     return (
         <div className="container">
-            <Header />
-            <SearchBar />
-            <div className="row mt-4">
-                <div className="col-4">
-                    <Filters />
-                </div>
-                <div className="col-8">
-                    <MovieList data={data.results} />
-                    <Paginate
-                        onChange={onChange}
-                        activePage={activePage}
-                        totalPages={data.total_pages}
-                    />
-                </div>
+            <div className="mt-4 mb-4">
+                <SearchWrapper />
             </div>
+            {dataToShow && (
+                <div className="row mt-4">
+                    <div className="col-12">
+                        <MovieList data={dataToShow} />
+
+                        {!suggestData && (
+                            <Paginate
+                                onChange={onChange}
+                                activePage={page}
+                                totalPages={data.total_pages}
+                            />
+                        )}
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
