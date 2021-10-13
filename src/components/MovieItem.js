@@ -16,7 +16,7 @@ export default function MovieItem({ item }) {
                 <Link className="card-title" to={`/movie/${item.id}`}>
                     {item.title}
                 </Link>
-                <div className="card-text">Рейтинг: {item.vote_average}</div>
+                <div className="card-text">Vote: {item.vote_average}</div>
             </div>
         </div>
     );

@@ -14,8 +14,12 @@ export default function Main() {
     const { data, isLoading, isError } = useGetAllMoviesQuery(page + 1);
     const sliceToShow = 5;
 
-    if (isLoading) return <h1>Loading...</h1>;
-    if (isError) return <h1>Something went wrong 🤔</h1>;
+    if (isLoading) {
+        return <h1>Loading...</h1>;
+    }
+    if (isError) {
+        return <h1>Something went wrong 🤔</h1>;
+    }
 
     const dataToShow = suggestData
         ? suggestData.results.slice(0, sliceToShow)
