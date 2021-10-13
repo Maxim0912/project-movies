@@ -14,7 +14,9 @@ export default function SearchWrapper() {
     const redirectPage = 1;
 
     useEffect(() => {
-        if (searchResult) trigger({ query: searchResult, page: redirectPage });
+        if (searchResult) {
+            trigger({ query: searchResult, page: redirectPage });
+        }
         if (data) {
             dispatch(setSuggest(data));
         }
