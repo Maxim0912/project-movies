@@ -24,5 +24,5 @@ export const {
     useGetAllMoviesQuery,
     useGetSingleMovieByIdQuery,
     useLazySearchMovieQuery,
-    useSearchMovieQuery,
+    useLazyGetSingleMovieByIdQuery,
 } = moviesApi;
