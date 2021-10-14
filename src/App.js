@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import Favorite from "./components/Favorite";
-import HeaderWrapper from "./components/HeaderWrapper.js";
+import Header from "./components/Header.js";
 import History from "./components/History";
 import Main from "./components/Main";
 import MovieSinglePage from "./components/MovieSinglePage";
@@ -18,7 +18,7 @@ export default function App() {
     dispatch(init());
     return (
         <Router>
-            <HeaderWrapper />
+            <Header />
             <Switch>
                 <Route path="/" component={Main} exact />
                 <Route path="/search" component={SearchResult} />

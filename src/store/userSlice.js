@@ -4,6 +4,7 @@ const initialState = {
     currentUser: null,
     users: {},
     init: false,
+    favorites: {},
 };
 
 const userSlice = createSlice({
@@ -13,6 +14,7 @@ const userSlice = createSlice({
         setup: (state, action) => {
             state.users = action.payload.users || {};
             state.currentUser = action.payload.currentUser || null;
+            state.favorites = action.payload.favorites || {};
         },
         init: (state) => {
             state.init = true;
@@ -20,6 +22,7 @@ const userSlice = createSlice({
         signup: (state, action) => {
             if (!state.users[action.payload.login]) {
                 state.users[action.payload.login] = action.payload;
+                state.favorites[action.payload.login] = [];
             }
         },
         signin: (state, action) => {
@@ -38,8 +41,26 @@ const userSlice = createSlice({
         signout: (state) => {
             state.currentUser = null;
         },
+        toggleFavorites: (state, action) => {
+            const user = action.payload.currentUser;
+            const id = action.payload.item.id;
+            if (
+                state.favorites[user].filter((elem) => elem.id === id)
+                    .length === 0
+            ) {
+                state.favorites[user] = [
+                    ...state.favorites[user],
+                    action.payload.item,
+                ];
+            } else {
+                state.favorites[user] = state.favorites[user].filter(
+                    (elem) => elem.id !== id
+                );
+            }
+        },
     },
 });
 
-export const { setup, signup, signin, signout, init } = userSlice.actions;
+export const { setup, signup, signin, signout, init, toggleFavorites } =
+    userSlice.actions;
 export default userSlice.reducer;

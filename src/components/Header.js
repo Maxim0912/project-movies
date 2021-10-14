@@ -1,10 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import Logo from "./Logo";
 import PrivateMenu from "./PrivateMenu";
 
-export default function Header({ currentUser }) {
+export default function Header() {
+    const currentUser = useSelector((state) => state.user.currentUser);
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-primary">
             <div className="container-fluid">
